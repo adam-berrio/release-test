@@ -30,3 +30,4 @@ Commit patch
 Commit minor
 Commit major
 commit minor
+commit minor
