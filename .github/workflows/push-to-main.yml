@@ -19,7 +19,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
                   RELEASE_BRANCHES: main
-                  VERBOSE: false
+                  VERBOSE: true
             # Output version tag
             - name: GitHub | Output version
               id: tag_outputs
