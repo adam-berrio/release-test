@@ -23,4 +23,4 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Verify Release
-              run: echo 'got output ${{ fromJson(steps.get-release.outputs.data }}'
+              run: echo 'got output ${{ fromJson(steps.get-release.outputs.data) }}'
