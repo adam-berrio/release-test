@@ -13,6 +13,16 @@ jobs:
         steps:
             - name: Starting
               run: echo 'Running release for tag ${{ github.event.inputs.release-tag }}'
+            - name: List Releases
+              id: list-releases
+              uses: octokit/request-action@v2.0.17
+              with:
+                  route: Get /repos/:repository/releases
+                  repository: ${{ github.repository }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Print Releases
+              run: echo 'got output ${{ fromJSON(steps.list-releases.outputs.data) }}
             - name: Get Release
               id: get-release
               uses: octokit/request-action@v2.0.17
