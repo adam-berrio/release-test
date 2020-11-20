@@ -22,7 +22,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Print Releases
-              run: echo 'got output ${{ steps.list-releases.outputs.data }}
+              run: echo 'got output ${{ steps.list-releases.outputs.data }}'
             - name: Get Release
               id: get-release
               uses: octokit/request-action@v2.0.17
