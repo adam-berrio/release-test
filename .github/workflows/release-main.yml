@@ -1,0 +1,15 @@
+
+name: Release Main
+on:
+    workflow_dispatch:
+        inputs:
+            commit-hash:
+                description: Commit Hash
+                required: true
+jobs:
+    release:
+        name: Release Main
+        runs-on: ubuntu-latest
+        steps:
+            - name: Starting
+              run: echo 'Running release for commit ${{ github.event.inputs.commit-hash }}'

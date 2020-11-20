@@ -1,0 +1,36 @@
+
+name: Push to Main
+
+on:
+    push:
+        branches: [ main ]
+jobs:
+    publish:
+        name: Tag & Publish Main
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.tag_outputs.outputs.version }}
+        steps:
+            # Tag build to get version
+            - name: GitHub | Tag build
+              id: version
+              uses: anothrNick/github-tag-action@1.33.0
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  WITH_V: true
+                  RELEASE_BRANCHES: main
+                  VERBOSE: false
+            # Output version tag
+            - name: GitHub | Output version
+              id: tag_outputs
+              run: echo "::set-output name=version::${{ steps.version.outputs.new_tag }}"
+            # Draft release notes
+            - name: Drafts Release Notes
+              uses: release-drafter/release-drafter@v5.12.1
+              with: # (Optional) specify 'config-name:' to use, relative to .github/. Default: release-drafter.yml
+                config-name: release-drafter-template.yml
+                prerelease: true
+                name: ${{ steps.version.outputs.new_tag }}
+                tag: ${{ steps.version.outputs.new_tag }}
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
