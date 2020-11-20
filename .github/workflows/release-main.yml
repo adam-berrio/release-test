@@ -3,8 +3,8 @@ name: Release Main
 on:
     workflow_dispatch:
         inputs:
-            commit-hash:
-                description: Commit Hash
+            release-tag:
+                description: Version to release. Should be in 'v#.#.#' format
                 required: true
 jobs:
     release:
@@ -12,4 +12,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Starting
-              run: echo 'Running release for commit ${{ github.event.inputs.commit-hash }}'
+              run: echo 'Running release for tag ${{ github.event.inputs.release-tag }}'
+            - name: Get Release
+              id: get-release
+              uses: octokit/request-action@v2.0.17
+              with:
+                  route: GET /repos/:repository/releases/tags/:tag
+                  repository: ${{ github.repository }}
+                  tag: ${{ github.event.inputs.release-tag }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Verify Release
+              run: echo 'got output ${{ fromJson(steps.get-release.outputs.data }}'
