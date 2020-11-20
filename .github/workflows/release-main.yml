@@ -13,6 +13,7 @@ jobs:
         steps:
             - name: Starting
               run: echo 'Running release for tag ${{ github.event.inputs.release-tag }}'
+            # Get all releases
             - name: List Releases
               id: list-releases
               uses: octokit/request-action@v2.0.17
@@ -23,14 +24,13 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Print Releases
               run: echo 'got output ${{ steps.list-releases.outputs.data }}'
-            - name: Get Release
-              id: get-release
-              uses: octokit/request-action@v2.0.17
-              with:
-                  route: GET /repos/:repository/releases/tags/:tag
-                  repository: ${{ github.repository }}
+            # Draft release notes
+              - name: Drafts Release Notes
+                uses: release-drafter/release-drafter@v5.12.1
+                with:
+                  prerelease: false
+                  name: ${{ github.event.inputs.release-tag }}
                   tag: ${{ github.event.inputs.release-tag }}
-              env:
+                  publish: true
+                env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: Verify Release
-              run: echo 'got output ${{ fromJson(steps.get-release.outputs.data) }}'
