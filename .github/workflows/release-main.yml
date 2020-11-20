@@ -26,7 +26,7 @@ jobs:
               run: echo 'got output ${{ steps.list-releases.outputs.data }}'
             # Draft release notes
             - name: Drafts Release Notes
-              uses: release-drafter/release-drafter@v5.12.1
+              uses: adam-berrio/release-drafter@v0.1.0
               with:
                   prerelease: false
                   name: ${{ github.event.inputs.release-tag }}
