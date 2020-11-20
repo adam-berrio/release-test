@@ -25,12 +25,12 @@ jobs:
             - name: Print Releases
               run: echo 'got output ${{ steps.list-releases.outputs.data }}'
             # Draft release notes
-              - name: Drafts Release Notes
-                uses: release-drafter/release-drafter@v5.12.1
-                with:
+            - name: Drafts Release Notes
+              uses: release-drafter/release-drafter@v5.12.1
+              with:
                   prerelease: false
                   name: ${{ github.event.inputs.release-tag }}
                   tag: ${{ github.event.inputs.release-tag }}
                   publish: true
-                env:
+              env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
