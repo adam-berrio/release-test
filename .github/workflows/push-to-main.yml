@@ -11,6 +11,11 @@ jobs:
         outputs:
             version: ${{ steps.tag_outputs.outputs.version }}
         steps:
+            # Checkout the code
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
             # Tag build to get version
             - name: GitHub | Tag build
               id: version
