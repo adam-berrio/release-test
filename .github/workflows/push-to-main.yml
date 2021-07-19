@@ -11,6 +11,15 @@ jobs:
         outputs:
             version: ${{ steps.tag_outputs.outputs.version }}
         steps:
+            # Check if we should skip
+            - name: Check PR Labels
+              id: labelCheck
+              uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                labels: '["skip-version"]'
+            - name: Label Result
+              run: echo "Was tag on PR? ${{ steps.labelCheck.outputs.result }}"
             # Checkout the code
             - name: Checkout
               uses: actions/checkout@v2
