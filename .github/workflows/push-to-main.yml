@@ -26,6 +26,7 @@ jobs:
               with:
                 fetch-depth: 0
             # Tag build to get version
+            # Blah Blah
             - name: GitHub | Tag build
               id: version
               uses: anothrNick/github-tag-action@1.33.0
