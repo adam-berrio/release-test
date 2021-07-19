@@ -20,6 +20,7 @@ jobs:
                 labels: '["skip-version"]'
             - name: Label Result
               run: echo "Was tag on PR? ${{ steps.labelCheck.outputs.result }}"
+              if: steps.labelCheck.outputs.result == 'true'
             # Checkout the code
             - name: Checkout
               uses: actions/checkout@v2
@@ -29,7 +30,7 @@ jobs:
             # Blah Blah
             - name: GitHub | Tag build
               id: version
-              uses: anothrNick/github-tag-action@1.33.0
+              uses: anothrNick/github-tag-action@1.34.0
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   WITH_V: true
