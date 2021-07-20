@@ -18,7 +18,6 @@ jobs:
               with:
                 github-token: ${{ secrets.GITHUB_TOKEN }}
                 labels: '["skip-version"]'
-            # White space change
             - name: GitHub | Label Result
               run: echo "'skip-version' tag found. Skipping Tag & Publish."
               if: steps.skipVersion.outputs.result == 'true'
@@ -27,11 +26,13 @@ jobs:
               if: steps.skipVersion.outputs.result == 'true'
             # Checkout the code
             - name: Checkout
+              if: steps.skipVersion.outputs.result == 'false'
               uses: actions/checkout@v2
               with:
                 fetch-depth: 0
             # Tag build to get version
             - name: GitHub | Tag build
+              if: steps.skipVersion.outputs.result == 'false'
               id: version
               uses: anothrNick/github-tag-action@1.34.0
               env:
@@ -41,5 +42,6 @@ jobs:
                   VERBOSE: true
             # Output version tag
             - name: GitHub | Output version
+              if: steps.skipVersion.outputs.result == 'false'
               id: tag_outputs
               run: echo "::set-output name=version::${{ steps.version.outputs.new_tag }}"
