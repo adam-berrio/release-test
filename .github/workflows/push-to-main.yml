@@ -12,15 +12,18 @@ jobs:
             version: ${{ steps.tag_outputs.outputs.version }}
         steps:
             # Check if we should skip
-            - name: Check PR Labels
-              id: labelCheck
+            - name: GitHub | Check PR Labels
+              id: skipVersion
               uses: shioyang/check-pr-labels-on-push-action@v1.0.3
               with:
                 github-token: ${{ secrets.GITHUB_TOKEN }}
                 labels: '["skip-version"]'
-            - name: Label Result
-              run: echo "Was tag on PR? ${{ steps.labelCheck.outputs.result }}"
-              if: steps.labelCheck.outputs.result == 'true'
+            - name: GitHub | Label Result
+              run: echo "'skip-version' tag found. Skipping Tag & Publish."
+              if: steps.skipVersion.outputs.result == 'true'
+            - name: GitHub | Cancel Tag & Publish
+              uses: andymckay/cancel-action@0.2
+              if: steps.skipVersion.outputs.result == 'true'
             # Checkout the code
             - name: Checkout
               uses: actions/checkout@v2
