@@ -18,6 +18,7 @@ jobs:
               with:
                 github-token: ${{ secrets.GITHUB_TOKEN }}
                 labels: '["skip-version"]'
+            # White space change
             - name: GitHub | Label Result
               run: echo "'skip-version' tag found. Skipping Tag & Publish."
               if: steps.skipVersion.outputs.result == 'true'
