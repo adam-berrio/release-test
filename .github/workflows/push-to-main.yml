@@ -21,9 +21,6 @@ jobs:
             - name: GitHub | Label Result
               run: echo "'skip-version' tag found. Skipping Tag & Publish."
               if: steps.skipVersion.outputs.result == 'true'
-            - name: GitHub | Cancel Tag & Publish
-              uses: andymckay/cancel-action@0.2
-              if: steps.skipVersion.outputs.result == 'true'
             # Checkout the code
             - name: Checkout
               if: steps.skipVersion.outputs.result == 'false'
