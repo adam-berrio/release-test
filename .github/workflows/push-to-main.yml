@@ -22,6 +22,7 @@ jobs:
               run: echo "'skip-version' tag found. Skipping Tag & Publish."
               if: steps.skipVersion.outputs.result == 'true'
             # Checkout the code
+            # Checkout the code
             - name: Checkout
               if: steps.skipVersion.outputs.result == 'false'
               uses: actions/checkout@v2
